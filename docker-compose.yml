@@ -1,0 +1,52 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - DATABASE_URL=mysql://root:api1@db:3306/server-api
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: api1
+      MYSQL_DATABASE: server-api
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_container
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: api1
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  websocket:
+    build:
+      context: ./socket-app
+      dockerfile: ../Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq
+
+volumes:
+  db_data:
