@@ -3,9 +3,7 @@ import ServerComponent from "@/components/Server";
 import ServersService from "@/services/servers";
 import ServerType from "@/types/server";
 import { io } from "socket.io-client";
-import Login from "./components/Login";
 function App() {
-  <Login />;
   const [servers, setServers] = useState<ServerType[]>([]);
   const SOCKET_SERVER_URL = "http://localhost:4000";
 

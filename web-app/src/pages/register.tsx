@@ -1,34 +1,26 @@
-import { useState } from "react";
-import image from "../assets/image.webp";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "@/services/auth";
+import image from "../assets/image.webp";
 
-export default function Login() {
+export default function Register() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
-      const response = await AuthService.login(email, password);
-      alert("Login bem-sucedido!");
-
-      // Agora você pode usar a variável 'response' se precisar acessar dados dela
-      const token = response.data.token; // Supondo que o token esteja na resposta como 'data.token'
-      localStorage.setItem("token", token); // Armazena o token em localStorage
-
-      // Validação do token após login
-      const isValidToken = await AuthService.validateToken(token);
-
-      if (isValidToken) {
-        navigate("/App"); // Redireciona apenas se o token for válido
-      } else {
-        alert("Ocorreu um problema com a validação do token.");
+      const response = await AuthService.register(name, email, password);
+      if (response.status === 201) {
+        alert("Cadastro realizado com sucesso! Redirecionando para login.");
+        navigate("/"); // Redireciona para a página de login
       }
-    } catch (err) {
-      alert("Credenciais inválidas");
-      console.log(err);
+    } catch (error) {
+      console.error("Erro ao registrar:", error);
+      alert("Falha no cadastro. Tente novamente.");
     }
   };
 
@@ -36,8 +28,17 @@ export default function Login() {
     <section className="min-h-screen flex items-center justify-center font-mono bg-gradient-to-r from-cyan-500 from-10% via-indigo-500 via-50% to sky-500 to-100%">
       <div className="flex shadow-2xl">
         <div className="flex flex-col items-center justify-center text-center p-20 gap-8 bg-white rounded-2xl xl:rounded-tr-none xl:rounded-br-none">
-          <h1 className="text-5xl font-bold">Bem-vindo</h1>
+          <h1 className="text-5xl font-bold">Cadastra-se</h1>
           <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+            <div className="flex flex-col text-2xl text-left gap-1">
+              <span>Nome</span>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="rounded-md p-1 border-2 outline-none focus:border-cyan-400 focus:bg-slate-50"
+              />
+            </div>
             <div className="flex flex-col text-2xl text-left gap-1">
               <span>Email</span>
               <input
@@ -55,22 +56,18 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="rounded-md p-1 border-2 outline-none focus:border-cyan-400 focus:bg-slate-50"
               />
-              <div className="flex gap-1 items-center">
-                <input type="checkbox" />
-                <span className="text-base">Lembrar a senha</span>
-              </div>
             </div>
             <button
               type="submit"
               className="px-10 py-2 text-2xl rounded-md text-white bg-gradient-to-tr from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
             >
-              Login
+              Cadastrar
             </button>
           </form>
           <p className="font-semibold">
-            Não tens uma conta?{" "}
-            <a href="/cadastrar" className="text-blue-400 hover:underline">
-              Cadastra-se
+            Já tens uma conta?{" "}
+            <a href="/" className="text-blue-400 hover:underline">
+              Login
             </a>{" "}
           </p>
         </div>

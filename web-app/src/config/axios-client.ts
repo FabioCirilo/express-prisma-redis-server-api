@@ -6,10 +6,23 @@ const axiosClient = axios.create({
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNzk4NTI1OSwiZXhwIjoxNzM3OTg4ODU5fQ.HxFgx9SIkk2Qy_vsDu-J_el0jVVB4cgcLKAUlqRi824",
   },
 });
+
+axiosClient.interceptors.request.use(
+  (config) => {
+    // Obtém o token do localStorage
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Adiciona o token ao cabeçalho Authorization
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 axiosClient.interceptors.response.use(
   (response) => {
