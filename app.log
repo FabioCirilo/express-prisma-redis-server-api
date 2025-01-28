@@ -244,3 +244,4 @@
 ::ffff:172.18.0.1 - - [28/Jan/2025:13:36:04 +0000] "GET /api/servers HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0"
 ::ffff:172.18.0.1 - - [28/Jan/2025:13:36:12 +0000] "GET /api/servers HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0"
 ::ffff:172.18.0.1 - - [28/Jan/2025:13:36:12 +0000] "GET /api/servers HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0"
+::ffff:172.18.0.1 - - [28/Jan/2025:13:48:25 +0000] "POST /api/auth/register HTTP/1.1" 201 57 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0"
